@@ -1,0 +1,81 @@
+.selectionClass {
+    border: 2px solid lightgrey !important;
+    border-radius: 10px;
+    padding: 3px
+}
+
+/* .hlaSelection {
+  border: 3px solid #8cb7ea !important;
+  border-radius: 10px;
+  padding: 3px
+} */
+
+
+.labelPos {
+    padding: 3px;
+    margin-left: 10px;
+    border: 3px;
+    border-radius: 10px;
+    position: relative !important;
+    /* font-weight: 600; */
+    font-size: 12px;
+    top: -15px;
+    background-color: white !important;
+  }
+  
+  .labelPos2 {
+    padding: 3px;
+    margin-left: 10px;
+    border: 3px;
+    border-radius: 10px;
+    position: relative !important;
+    /* font-weight: 600; */
+    font-size: 12px;
+    top: -25px;
+    background-color: white !important;
+  }
+
+  .labelPos3 {
+    padding: 3px;
+    margin-left: 10px;
+    border: 3px;
+    border-radius: 5px;
+    position: relative !important;
+    /* font-weight: 600; */
+    font-size: 12px;
+    top: -16px;
+    background-color: white !important;
+  }
+  
+  .css-1aznpnh-MuiSlider-root {
+    width: 95% !important;
+    margin-left: 5px !important;
+  }
+
+  .switchClass {
+    /* display: flex !important;
+    flex-direction: column; */
+    border: 2px solid lightgrey !important;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  
+  .radioClass {
+    /* display: flex !important;
+    flex-direction: column; */
+    border: 2px solid lightgrey !important;
+    border-radius: 10px;
+    padding-left: 10px;
+    height: fit-content !important;
+  }
+
+  .css-1vyyogs-JoyToggleButtonGroup-root, .css-edehgc-JoyToggleButtonGroup-root {
+    position: relative !important;
+    top: -15px !important;
+    padding-left: 5px;
+    padding-right: 15px;
+  }
+  
+  
+  
