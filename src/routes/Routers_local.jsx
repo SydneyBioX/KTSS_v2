@@ -28,9 +28,9 @@ const Routers = () => {
       <Routes>
         {/* Public Route */}
         {/* <Route path = "/KTSS" element = {<KTSS />} /> */}
-        <Route path = "/" element = {<Home/>} />
-        <Route path = "/ktss" element = {<KTSS/>} />
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* <Route path = "/" element = {<Home/>} /> */}
+        <Route path = "/ktss" element = {<KTSS />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       
       {/* Protected Route */}
       <Route
@@ -39,7 +39,7 @@ const Routers = () => {
             />
 
             {/* Default Redirect */}
-            <Route path="/*" element={<Navigate to="/" />} />
+            <Route path="/*" element={<Navigate to="/ktss" />} />
       </Routes>
     </Router>
   )
