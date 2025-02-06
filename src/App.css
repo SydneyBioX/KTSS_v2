@@ -49,7 +49,11 @@ html, body, #app, #app>div {
 }
 
 .hlaWidth {
-  width: 100px !important;
+  width: 120px !important;
+}
+
+.chartClass {
+  height: auto;
 }
 
 .show {
@@ -78,6 +82,11 @@ html, body, #app, #app>div {
   border-bottom: 1px solid #d5edbe;
 }
 
+.bg-white {
+  background-color: #d5edbe !important;
+  border-color: #b0e090 3px solid !important;
+}
+
 .largerText {
   position: relative !important;
   font-size: 48px !important;
@@ -89,8 +98,8 @@ html, body, #app, #app>div {
   border: 3px solid #8cb7ea;
 }
 
-#currentQuality .css-eg0mwd-MuiSlider-thumb, 
-#currentProb .css-eg0mwd-MuiSlider-thumb
+#currentQuality span.MuiSlider-thumb, 
+#currentProb span.MuiSlider-thumb
  {
   background-color: transparent !important;
 }
@@ -115,7 +124,7 @@ html, body, #app, #app>div {
 } */
 
 /* #sliderPos span[data-index="1"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen,  */
-.sliderPos span[data-index="1"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen
+.sliderPos span[data-index="1"] .MuiSlider-valueLabelOpen
  {
   top: 40px !important;
   background-color: transparent  !important;
@@ -128,7 +137,7 @@ html, body, #app, #app>div {
 }
 
 /* #sliderPos span[data-index="1"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen,  */
-.reverseSliderPos span[data-index="1"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen
+.reverseSliderPos span[data-index="1"] .MuiSlider-valueLabelOpen
  {
   top: 5px !important;
   background-color: transparent  !important;
@@ -152,7 +161,7 @@ html, body, #app, #app>div {
 } */
 
 /* #currentQuality span[data-index="0"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen,  */
-.sliderPos span[data-index="0"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen
+.sliderPos span[data-index="0"] .MuiSlider-valueLabelOpen
  {
   background-color: rgba(1,1,1,0)  !important;
   top: 5px;
@@ -163,7 +172,7 @@ html, body, #app, #app>div {
   border-top: 20px solid green;
 }
 
-.reverseSliderPos span[data-index="0"] .css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen
+.reverseSliderPos span[data-index="0"] .MuiSlider-valueLabelOpen
  {
   background-color: rgba(1,1,1,0)  !important;
   top: 40px;
@@ -183,14 +192,14 @@ html, body, #app, #app>div {
 } */
 
 /* #currentQuality span[data-index="1"] span.MuiSlider-valueLabelLabel, */
-.sliderPos span[data-index="1"] span.MuiSlider-valueLabelLabel
+.sliderPos span[data-index="1"] .MuiSlider-valueLabelLabel
 {
   position: relative !important;
   top: 15px !important;
   font-size: 14px !important;
 }
 
-.reverseSliderPos span[data-index="1"] span.MuiSlider-valueLabelLabel
+.reverseSliderPos span[data-index="1"] .MuiSlider-valueLabelLabel
 {
   position: relative !important;
   top: -15px !important;
@@ -206,14 +215,14 @@ html, body, #app, #app>div {
 } */
 
 /* #currentQuality span[data-index="0"] span.MuiSlider-valueLabelLabel, */
-.sliderPos span[data-index="0"] span.MuiSlider-valueLabelLabel
+.sliderPos span[data-index="0"] .MuiSlider-valueLabelLabel
 {
   position: relative !important;
   top: -15px !important;
   font-size: 14px !important;
 }
 
-.reverseSliderPos span[data-index="0"] span.MuiSlider-valueLabelLabel
+.reverseSliderPos span[data-index="0"] .MuiSlider-valueLabelLabel
 {
   position: relative !important;
   top: 15px !important;
@@ -231,7 +240,8 @@ html, body, #app, #app>div {
 .ktss-container {
   display: flex;
   flex-wrap: wrap;
-  height: 100vh;
+  /* height: 100vh; */
+  justify-content: space-between;
   align-content: center !important;
   background-color: white;
 }
@@ -283,14 +293,14 @@ html, body, #app, #app>div {
 .sub-sub-heading {
   text-align: center;
   border-bottom: 1px solid #8cb7ea;
-  background-color: #e7f0f8;
+  background-color: #c5dbf4;
   padding: 0 !important;
   margin: 0 !important
 }
 
 .result_sub-heading {
   text-align: center;
-  background-color: #e7f5dd;
+  background-color: #d7efc7;
   border-bottom: 3px solid #b0e090;
 }
 
@@ -327,7 +337,7 @@ html, body, #app, #app>div {
 }
 
 .sub-heading {
-  background-color: #e7f0f8;
+  background-color: #c5dbf4;
 }
 
 .ageClass {
@@ -373,18 +383,18 @@ html, body, #app, #app>div {
   background: #467ab1 !important
 }
 
-.css-nnid7-MuiSlider-valueLabel.MuiSlider-valueLabelOpen {
+.MuiSlider-valueLabel.MuiSlider-valueLabelOpen {
   padding: 0.2rem !important;
   background-color: #1976d2 !important;
 }
 
-#currentQuality .css-1gv0vcd-MuiSlider-track,
-#currentProb .css-1gv0vcd-MuiSlider-track {
+#currentQuality .MuiSlider-track,
+#currentProb .MuiSlider-track {
   visibility: hidden;
 }
 
-#currentQuality .css-14pt78w-MuiSlider-rail,
-#currentProb .css-14pt78w-MuiSlider-rail {
+#currentQuality .MuiSlider-rail,
+#currentProb .MuiSlider-rail {
   height: 20px !important;
   background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet) !important;
 }
@@ -610,15 +620,15 @@ html, body, #app, #app>div {
     left: -50px !important;
   }
 
-  .css-14pt78w-MuiSlider-rail {
+  .MuiSlider-rail {
     height: 10px !important
   }
 
-  .css-eg0mwd-MuiSlider-thumb {
+  .MuiSlider-thumb {
     width: 5px !important
   }
 
-  .css-1gv0vcd-MuiSlider-track {
+  .MuiSlider-track {
     height: 10px !important;
   }
 
@@ -669,12 +679,12 @@ html, body, #app, #app>div {
   float: right;
 }
 
+
+
 #currentProb, #currentQuality {
   border: 2px solid lightgrey !important;
   border-radius: 10px;
-  padding-top: 20px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 15px;
   margin-bottom: 20px;
 }
 
@@ -682,7 +692,7 @@ html, body, #app, #app>div {
   position: relative !important;
   /* font-weight: 600; */
   font-size: 12px;
-  top: -20px;
+  top: -15px;
   text-align: center;
   
 }
@@ -696,6 +706,98 @@ html, body, #app, #app>div {
 }
 
 
+
+.selectionClass {
+  border: 2px solid lightgrey !important;
+  border-radius: 10px;
+  padding: 5px
+}
+
+/* .hlaSelection {
+border: 3px solid #8cb7ea !important;
+border-radius: 10px;
+padding: 3px
+} */
+
+
+.labelPos {
+  padding: 3px;
+  margin-left: 10px;
+  border: 3px;
+  border-radius: 10px;
+  position: relative !important;
+  /* font-weight: 600; */
+  font-size: 12px;
+  top: -15px;
+  background-color: white !important;
+}
+
+.labelPos2 {
+  padding: 3px;
+  margin-left: 10px;
+  border: 3px;
+  border-radius: 10px;
+  position: relative !important;
+  /* font-weight: 600; */
+  font-size: 12px;
+  top: -25px;
+  background-color: white !important;
+}
+
+.labelPos3 {
+  padding: 3px;
+  margin-left: 10px;
+  border: 3px;
+  border-radius: 5px;
+  position: relative !important;
+  /* font-weight: 600; */
+  font-size: 12px;
+  top: -16px;
+  background-color: white !important;
+}
+
+.css-1aznpnh-MuiSlider-root {
+  width: 95% !important;
+  margin-left: 5px !important;
+}
+
+.switchClass {
+  /* display: flex !important;
+  flex-direction: column; */
+  border: 2px solid lightgrey !important;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+
+.radioClass {
+  /* display: flex !important;
+  flex-direction: column; */
+  border: 2px solid lightgrey !important;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px !important;
+  height: fit-content !important;
+  position: relative !important;
+  /* top: -15px !important; */
+}
+
+.css-1vyyogs-JoyToggleButtonGroup-root, .css-edehgc-JoyToggleButtonGroup-root {
+  position: relative !important;
+  top: -15px !important;
+  padding-left: 5px;
+  padding-right: 15px;
+}
+
+.genButton {
+  background-color: #8cb7ea !important;
+  font-weight: bolder !important;
+  font-size: 24px !important;
+}
+
+.min-w-\[200px\] {
+  min-width: 130px !important;
+}
 
 
 

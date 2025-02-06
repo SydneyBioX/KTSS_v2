@@ -1,7 +1,7 @@
 .selectionClass {
     border: 2px solid lightgrey !important;
     border-radius: 10px;
-    padding: 3px
+    padding: 5px
 }
 
 /* .hlaSelection {
@@ -68,6 +68,8 @@
     border-radius: 10px;
     padding-left: 10px;
     height: fit-content !important;
+    position: relative !important;
+    top: -15px !important;
   }
 
   .css-1vyyogs-JoyToggleButtonGroup-root, .css-edehgc-JoyToggleButtonGroup-root {

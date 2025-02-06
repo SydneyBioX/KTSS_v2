@@ -1,7 +1,7 @@
 {
   "name": "ui",
   "version": "0.1.0",
-  
+ 
   "private": true,
   "dependencies": {
     "@canvasjs/charts": "^3.7.30",
@@ -58,14 +58,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run build:react && npm run build:bundle",
+    "build": "npm run build:react",
     "build:react": "react-scripts build",
     "build:bundle": "webpack --config webpack.config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-
   },
   "eslintConfig": {
     "extends": [
@@ -87,6 +86,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "gh-pages": "^6.1.1",
     "postcss": "^8.4.31",
     "react-router-dom": "^6.18.0",
     "tailwindcss": "^3.3.5"

@@ -7,59 +7,27 @@ import Header from '../components/Header/Header'
 import "../App.css"
 import simData from "../../src/assets/data/kidney_data.json"
 
-const marks =[
-  {
-    value: 0,
-    label: '0'
-  },
-  {
-    value: 10,
-    label: '10'
-  },
-  {
-    value: 20,
-    label: '20'
-  },
-  {
-    value: 30,
-    label: '30'
-  },
-  {
-    value: 40,
-    label: '40'
-  },
-  {
-    value: 50,
-    label: '50'
-  },
-  {
-    value: 60,
-    label: '60'
-  },
-  {value: 70,
-    label: '70'
-  },
-  {
-    value: 80,
-    label: '80'
-  },
-  {
-    value: 90,
-    label: '90'
-  },
-  {
-    value: 100,
-    label: '100'
-  }
-]
 
 const KTSS = () => {
   
   console.log("KTSS simData", simData)
 
+  const simDataWithKdpi = simData.map(item => {
+    const kdpi = Math.round(item.donor_rank * 100)
+
+    // Add kdpi to the item object
+    return {
+      ...item,
+      kdpi: kdpi,
+      wait_time: Math.round(item.wait_time)
+    };
+  });
+
   const [visibilityClass, setVisibilityClass] = useState("hide")
   const [selection, setSelection] = useState("selectionBefore")
   const [finalResults, setFinalResults] = useState("")
+
+  const [currentKDPI, setCurrentKDPI] = useState(0)
 
   const setUpdatedClass = (updatedClass) => {
     setVisibilityClass(updatedClass)
@@ -73,6 +41,10 @@ const KTSS = () => {
     setFinalResults(updatedResults)
   }
 
+  const setUpdatedKDPI = (updatedKDPI) => {
+    setCurrentKDPI(updatedKDPI)
+  }
+
   console.log("final results", finalResults)
   return ( 
   <>
@@ -84,11 +56,11 @@ const KTSS = () => {
         <div className={selection} >
           <Typography variant="h4" className="sub-heading font-normal uppercase justify-center">Selections</Typography>
           <SelectionCard2024
-              simData = {simData} 
+              simData = {simDataWithKdpi} 
               setUpdatedClass = {setUpdatedClass}
               setUpdatedSelection = {setUpdatedSelection}
               setUpdatedResults = {setUpdatedResults}
-              marks = {marks}
+              setUpdatedKDPI = {setUpdatedKDPI}
                />
         </div>
         
@@ -96,13 +68,14 @@ const KTSS = () => {
           <Typography variant="h4" className="result_sub-heading font-normal uppercase justify-center">Results</Typography>
           <Result2024
             finalResults = {finalResults}
-            marks = {marks} 
+            currentKDPI = {currentKDPI}
             />
         </div>
         <div className={visibilityClass} >
-        <span><Typography variant="h4" className="result_sub-heading font-normal uppercase justify-center">Chart</Typography></span>
-        <span><Chart
+        <span><Typography variant="h4" className="result_sub-heading font-normal uppercase justify-center">Charts and table</Typography></span>
+        <span className="chartClass"><Chart
               finalResults = {finalResults}
+              currentKDPI = {currentKDPI}
               />
               </span>
         </div>

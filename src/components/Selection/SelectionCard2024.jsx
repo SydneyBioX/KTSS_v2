@@ -1,6 +1,11 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import KNN from 'ml-knn';
-import "./SelectionCard2024.css"
+import "../../App.css"
+// import { marks, kdriMarks, states, blGroups, hlas, chartLabel } from "./variables"
+// import {ageText, donorAgeText, praText, kdriText } from "./functions.js"
+import { marks, states, blGroups, hlas, chartLabel } from "./variables"
+import {ageText, donorAgeText, praText, kdpiText } from "./functions.js"
+// import { generateResults } from "./generateResults";
 import {Form, Row, Col} from "react-bootstrap"
 import Typography from '@mui/joy/Typography';
 import { Select, Option } from "@material-tailwind/react";
@@ -9,147 +14,151 @@ import Slider from '@mui/material/Slider';
 import Button from '@mui/joy/Button';
 import ToggleButtonGroup from '@mui/joy/ToggleButtonGroup';
 import Switch from '@mui/joy/Switch';
-
+import {Input} from "@material-tailwind/react";
 import ClearIcon from '@mui/icons-material/Clear';
 import DoneIcon from '@mui/icons-material/Done';
 
-const kdriMarks =[
-    {
-      value: 0,
-      label: '0'
-    },
-   
-    {
-      value: 0.5,
-      label: '0.5'
-    },
-
-    {
-      value: 1,
-      label: '1'
-    }
-  ]
-
-function ageText(value) {
-  return `${value}`
-}
-
-function donorAgeText(value) {
-    return `${value}`
-  }
-
-function praText(value) {
-  return `${value}`
-}
-
-function kdriText(value) {
-    return `${value}`
-  }
-
-
-const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUpdatedResults, marks}) => {
-  const [age, setAge] = useState([40, 60])
-  const [donorAge, setDonorAge] = useState([40, 60])
-  const [waittime, setWaittime] = useState(1)
+const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUpdatedResults, setUpdatedKDPI}) => {
+  // const [praAllowableValues, setPraAllowableValues] = useState([]);
+  // const [donorAgeRangeValues, setDonorAgeRangeValues] = useState([]);
+  // const [donorAgeMarks, setDonorAgeMarks] = useState([]);
+  // const [kdriRangeValues, setKdriRangeValues] = useState([]);
+  
+  const [age, setAge] = useState(50)
+  const [donorAge, setDonorAge] = useState(50)
+  // const [donorAge, setDonorAge] = useState(donorAgeRangeValues[0])
+  const [waittime, setWaittime] = useState(35)
   const [gender, setGender] = useState(false)
   const [donorGender, setDonorGender] = useState(false)
-  const [pra, setPra] = useState([10, 20])
-  const [kdri, setKdri] = useState([0.7, 0.8])
+  // const [pra, setPra] = useState(praAllowableValues[0])
+  const [pra, setPra] = useState(10)
+  // const [kdri, setKdri] = useState(kdriRangeValues[0])
+  // const [kdri, setKdri] = useState(0.5)
+  const [kdpi, setKdpi] = useState(50)
   const [blGroup, setBlGroup] = useState(1)
   const [donorBlGroup, setDonorBlGroup] = useState(1)
   const [stateValue, setStateValue] = useState(1)
+  const [donorStateValue, setDonorStateValue] = useState(1)
   const [diabetes, setDiabetes] = useState(true)
   const [donorDiabetes, setDonorDiabetes] = useState(true)
   const [hlaA, setHlaA] = useState(0)
   const [hlaB, setHlaB] = useState(0)
   const [hlaDr, setHlaDr] = useState(0)
   
-  const states = [
-    { name: "ACT", value: 1},
-    { name: "NSW", value: 2},
-    { name: "NT", value: 3},
-  //  { name: "NZ", value: 4},
-    { name: "QLD", value: 5},
-    { name: "SA", value: 6},
-    { name: "TAS", value: 7},
-    { name: "VIC", value: 8},
-    { name: "WA", value: 9}
-  ]
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 
-  const blGroups = [
-    { name: "A", value: 1},
-    { name: "AB", value: 2},
-    { name: "B", value: 3},
-    { name: "O", value: 4}
-  ]
-
-  const waittimes = [
-    { name: "0-2 months", value: 1},
-    { name: "3-5 months", value: 4},
-    { name: "6-8 months", value: 7},
-    { name: "9-11 months", value: 10},
-    { name: "12-17 months", value: 14},
-    { name: "18-23 months", value: 20},
-    { name: "24-35 months", value: 30},
-    { name: "35 plus months", value: 45},
-  ]
-
-  const hlas = [
-    {name: "0", value: 0},
-    {name: "1", value: 1},
-    {name: "2", value: 2},
-  ]
-
-  const chartLabel = [
-    {
-        offer: "First"
-    },
-    {
-        offer: "Second"
-    },
-    {
-        offer: "Third"
-    },
-    {
-        offer: "Fourth"
+  /* function adjustedHLA(hla) {
+    if (hla === 0) {
+      // If hla is 0, adjusted hla can be either 0 or 1
+      return Math.random() < 0.5 ? 0 : 1;
+    } else if (hla === 2) {
+      // If hla is 2, adjusted hla can be either 2 or 1
+      return Math.random() < 0.5 ? 2 : 1;
+    } else {
+      // If hla is 1, adjusted hla can be either 0, 1, or 2
+      const randomAdjustment = Math.floor(Math.random() * 3) - 1; // Random value between -1 and 1
+      return hla + randomAdjustment;
     }
-  ]
+  } */
 
+  // const findFirstMatch = (data) => {
+  //   let firstMatch = null;
+  //   let waittimeFound = null;
+  //   /* const genderValue = gender? 1 : 0
+  //   const diabetesValue = diabetes? 1 : 0
+  //   const donorGenderValue = donorGender? 1 : 0
+  //   const donorDiabetesValue = donorDiabetes? 1 : 0 */
+  //   let recip_age = age
+  //   let donor_age = donorAge
+  //   //let wt = waittime
+  //   // let current_hlaA = hlaA
+  //   // let current_hlaB = hlaB
+  //   // let current_hlaDr = hlaDr
+
+  //   while (!waittimeFound) {
+  //     waittimeFound = data.find(item => 
+  //       //item.wait_time === wt
+  //       item.wait_time === waittime  
+  //     )
+
+  //     console.log("Waittime found", waittimeFound)
+  //     if (!waittimeFound) {
+  //       wt = waittime + getRandomInt(-5, 5);
+  //     }  
+  //   }
+
+  //   if (waittimeFound) {
+  //     while (!firstMatch) {
+  //       firstMatch = data.find(item => 
+  //         // item.wait_time === wt &&
+  //         // item.recip_age === recip_age && 
+  //         // item.donor_age === donor_age 
+  //         item.wait_time === waittime &&
+  //         item.recip_age === age && 
+  //         item.donor_age === donorAge 
+  //         //&&
+  //         // item.tx_misa === current_hlaA &&
+  //         // item.tx_misb === current_hlaB &&
+  //         // item.tx_misdr === current_hlaDr
+  //         )
+        
+  //         if (!firstMatch) {
+  //           recip_age = age + getRandomInt(-5, 5); // Adjust age randomly within the range [-3, 3]
+  //           donor_age = donorAge + getRandomInt(-15, 15); // Adjust donorAge randomly within the range [-3, 3]
+  //           // current_hlaA = adjustedHLA(hlaA)
+  //           // current_hlaB = adjustedHLA(hlaB)
+  //           // current_hlaDr = adjustedHLA(hlaDr)
   
+  //         }
+  //         //console.log("First match check: ", waittime, recip_age, donor_age)
+  //     }
+  
+    
+  //   }
+
+  //   return (firstMatch)
+  // }
 
   const generateResults = (event) => {
     
-
+    console.log("wait time", waittime)
     setUpdatedClass("show")
     setUpdatedSelection("selectionAfter")
-    const avgAge = age.reduce((a,b) => a + parseFloat(b),0) / age.length
-    const avgPra = pra.reduce((a,b) => a + parseFloat(b),0) / pra.length
+    setUpdatedKDPI(kdpi)
+    // const avgAge = age.reduce((a,b) => a + parseFloat(b),0) / age.length
+    // const avgPra = pra.reduce((a,b) => a + parseFloat(b),0) / pra.length
     const genderValue = gender? 1 : 0
     const diabetesValue = diabetes? 1 : 0
     const donorGenderValue = donorGender? 1 : 0
-    const avgKdri = kdri.reduce((a,b) => a + parseFloat(b),0) /kdri.length
+    // const avgKdri = kdri.reduce((a,b) => a + parseFloat(b),0) /kdri.length
     const donorDiabetesValue = donorDiabetes? 1 : 0
-    const avgDonorAge = donorAge.reduce((a,b) => a + parseFloat(b),0) / donorAge.length
-    const dataLabel = [avgAge, waittime, genderValue, avgPra, blGroup, stateValue, diabetesValue, avgDonorAge, donorGenderValue, avgKdri, donorBlGroup, donorDiabetesValue, hlaA, hlaB, hlaDr]
+    // const avgDonorAge = donorAge.reduce((a,b) => a + parseFloat(b),0) / donorAge.length
+    const dataLabel = [age, blGroup, stateValue, donorBlGroup, donorStateValue, kdpi, donorAge, pra, genderValue, donorGenderValue, diabetesValue, donorDiabetesValue, hlaA, hlaB, hlaDr]
     
-    console.log("Average age", avgAge)
-    console.log("Average pra", avgPra)
+    // const firstMatch = findFirstMatch(simData)
+    // console.log("First match", firstMatch)
+
+    // console.log("Average age", avgAge)
+    // console.log("Average pra", avgPra)
     console.log("Data Label", dataLabel)
 
     console.log("simData", simData)
     
     const trainingData = simData.map(item => 
-      [item.recip_age,
-      Math.round(item.wait_time),
-      item.gender,
-      item.recip_pra,
+      [
+      item.recip_age,
       item.blgroup,
       parseInt(item.state),
-      item.diabetes,
-      item.donor_age,
-      item.donorGender,
-      item.donor_kdri,
       item.donorBlgroup,
+      parseInt(item.donorState),
+      item.kdpi,
+      item.donor_age,
+      item.recip_pra,
+      item.gender,
+      item.donorGender,
+      item.diabetes,
       item.donorDiabetes,
       item.tx_misa,
       item.tx_misb,
@@ -179,11 +188,11 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
       seq: (idx % 4) + 1,
       kidney_quality: parseInt(res.kidney_quality*100),
       predictsurvprob: parseInt(res.predictsurvprob*100),
-      wait_time: parseInt(res.wait_time),
+      wait_time: res.wait_time,
       tx_misa: res.tx_misa,
       tx_misb: res.tx_misb,
       tx_misdr: res.tx_misdr,
-      kdri: Math.round(res.donor_kdri,2)
+      kdpi: res.kdpi
     }))
 
     console.log("totalResult", totalResult)
@@ -192,7 +201,7 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
       if (!acc[cv.seq]) {
           acc[cv.seq] = {};
           acc[cv.seq].seq = cv.seq;
-          acc[cv.seq].count = acc[cv.seq].kidney_quality = acc[cv.seq].predictsurvprob= acc[cv.seq].wait_time= acc[cv.seq].tx_misa= acc[cv.seq].tx_misb= acc[cv.seq].tx_misdr= acc[cv.seq].kdri = 0
+          acc[cv.seq].count = acc[cv.seq].kidney_quality = acc[cv.seq].predictsurvprob= acc[cv.seq].wait_time= acc[cv.seq].tx_misa= acc[cv.seq].tx_misb= acc[cv.seq].tx_misdr= acc[cv.seq].kdpi = 0
       }
       acc[cv.seq].count++;
       acc[cv.seq].kidney_quality += cv.kidney_quality;
@@ -201,14 +210,14 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
       acc[cv.seq].tx_misa += cv.tx_misa;
       acc[cv.seq].tx_misb += cv.tx_misb;
       acc[cv.seq].tx_misdr += cv.tx_misdr;
-      acc[cv.seq].kdri += cv.kdri;
+      acc[cv.seq].kdpi += cv.kdpi;
       return acc;
     }, {});
   
     console.log("Group Result", grpResult)
 
     const avgResult = Object.keys(grpResult).map(key => {
-      let { seq, kidney_quality, predictsurvprob, wait_time, tx_misa, tx_misb, tx_misdr, kdri, count } = grpResult[key];
+      let { seq, kidney_quality, predictsurvprob, wait_time, tx_misa, tx_misb, tx_misdr, kdpi, count } = grpResult[key];
       return {
         seq, 
         kidney_quality: kidney_quality / count, 
@@ -217,7 +226,7 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
         tx_misa: tx_misa / count,
         tx_misb: tx_misb / count,
         tx_misdr: tx_misdr / count,
-        kdri: kdri / count
+        kdpi: kdpi / count
       };
   })
     
@@ -225,16 +234,31 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
     
     console.log("Chart Label", chartLabel, chartLabel[0].offer)
 
-    const finalRes = avgResult.map((res, idx) => ({
+    // const firstResult = {
+    //   kidney_quality: parseInt(firstMatch.kidney_quality*100),
+    //   predictsurvprob: parseInt(firstMatch.predictsurvprob*100),
+    //   wait_time: firstMatch.wait_time,
+    //   tx_misa: firstMatch.tx_misa,
+    //   tx_misb: firstMatch.tx_misb,
+    //   tx_misdr: firstMatch.tx_misdr,
+    //   kdpi: Math.round(firstMatch.kdpi, 2),
+    //   offer: chartLabel[0].offer
+    // }
+
+    // console.log("First result", firstResult)
+
+    let finalRes = avgResult.map((res, idx) => ({
       kidney_quality: res.kidney_quality,
       predictsurvprob: res.predictsurvprob,
       wait_time: res.wait_time,
       tx_misa: res.tx_misa,
       tx_misb: res.tx_misb,
       tx_misdr: res.tx_misdr,
-      kdri: res.kdri,
+      kdpi: res.kdpi,
       offer: chartLabel[idx].offer
     }))
+
+    //finalRes[0] = firstResult
 
     console.log("Final results", finalRes)
     setUpdatedResults(finalRes)
@@ -246,6 +270,14 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
 
     // console.log(payload)
   }; 
+
+  /* const handleWaittime = (v) => {
+    console.log("Selected waittime", v)
+    setWaittime(v)
+  } */
+
+//   const onChangeWaittime = (target) => {console.log("Input event", target.value)
+// setWaittime(target.value)}
 
   return (<>
 
@@ -265,12 +297,12 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
             <Col>
             <Form.Group className= "selectionClass" controlId="formAge">
            {/* Age */}
-            <Form.Label className="labelPos">Age Range</Form.Label>
+            <Form.Label className="labelPos">Age</Form.Label>
           
               <Slider
-                  getAriaLabel={() => 'Age range'}
+                  getAriaLabel={() => 'Age'}
                   value={age}
-                  step={10}
+                  step={1}
                   marks = {marks}
                   onChange={(event) => setAge(event.target.value)}
                   valueLabelDisplay="on"
@@ -280,19 +312,37 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
         </Form.Group>
 
         {/* Wait time */}
-        <Form.Group className="mt-4" controlId="formWaittime">
+        <Form.Group className="mt-3 selectionClass" controlId="formWaittime">
+          {/* <Form.Label className="labelPos">Wait time (in months)</Form.Label> */}
           {/* <span className="rounded-full p-1">
               <WaittimeTooltipWithHelperIcon />
           </span> */}
-          <Select label="Select Wait Time" value = {waittime} onChange={(event) => setWaittime(event)} >
-          {waittimes.map((wt, idx) => (
+          {/* <Select label="Select Wait Time" onChange={(event) => setWaittime(event)} > */}
+          {/* <Select label="Select Wait Time" onChange={(event) => handleWaittime(event)} > */}
+          
+          {/* {waittimes.map((wt, idx) => (
               <Option value = {wt.value}>{wt.name}</Option>
+          ))} */}
+            {/* {waittimeValues.map((value) => (
+              <Option key = {value} value = {value}>{value}</Option>
           ))}
-          </Select>
+          </Select> */}
+          {/* <Input onChange = {(target) => setWaittime(target.value)} variant="outlined" label="Wait time" placeholder="wait time"/> */}
+          <Form.Label className="labelPos">Wait time (in months)</Form.Label>
+          
+          <Input 
+            color="gray"
+            value = {waittime} 
+            onChange = {({target}) => setWaittime(parseInt(target.value, 10))} 
+            style={{width: "200px"}}
+            //variant="outlined" 
+            //label="Wait time (in months)" 
+            //placeholder="Wait time (in months)"
+            />
         </Form.Group>
 
         {/* Gender */}
-        <Form.Group className = "switchClass mt-4">
+        <Form.Group className = "switchClass mt-3">
           <Form.Label className="labelPos2">Gender</Form.Label>
           <Switch
               slotProps={{
@@ -327,9 +377,12 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
             <Box sx={{ width: "100%", borderRadius: 1}} >
               
               <Slider
-                getAriaLabel={() => 'Pra range'}
+                getAriaLabel={() => 'Pra'}
                 value={pra}
-                step={10}
+                // min = {praAllowableValues[0]}
+                // max = {praAllowableValues[praAllowableValues.length -1]}
+                // step = {praAllowableValues[1]- praAllowableValues[0]}
+                step={1}
                 marks = {marks}
                 onChange={(event) => setPra(event.target.value)}
                 valueLabelDisplay="on"
@@ -364,6 +417,7 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
         <Form.Group className="radioClass">
         <Form.Label className="labelPos3">State</Form.Label>
           <ToggleButtonGroup 
+            sx={{ flexWrap: "wrap"}}
             size = "sm" 
             color="primary"
             onChange={(event, newValue) => setStateValue(newValue)} 
@@ -425,13 +479,19 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
              
              {/* Donor Age */}
              <Form.Group className= "selectionClass" controlId="formDonorAge">
-             <Form.Label className="labelPos">Age Range</Form.Label>
+             <Form.Label className="labelPos">Age</Form.Label>
           
           <Slider
-              getAriaLabel={() => 'Age range'}
+              getAriaLabel={() => 'Age'}
               value={donorAge}
-              step={10}
+              // min = {donorAgeRangeValues[0]}
+              // max = {donorAgeRangeValues[donorAgeRangeValues.length -1]}
+              //donorAgeRangeValues[0]}
+              // step={1}
+              
+              step = {1}
               marks = {marks}
+              // marks = {donorAgeMarks}
               onChange={(event) => setDonorAge(event.target.value)}
               valueLabelDisplay="on"
               getAriaValueText={donorAgeText}
@@ -468,25 +528,27 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
             />
         </Form.Group>
            
-         {/* Kdri */}
+         {/* Kdpi */}
          <Form.Group className="selectionClass mt-3 mb-3 mr-2">
-        <Form.Label className="labelPos">Kdri</Form.Label>
+        <Form.Label className="labelPos">KDPI (%)</Form.Label>
             {/* <Form.Range /> */}
             <Box sx={{ width: "100%", borderRadius: 1}} >
               
               <Slider
-                getAriaLabel={() => 'Kdri range'}
-                value={kdri}
-                step={0.1}
-                marks = {kdriMarks}
+                getAriaLabel={() => 'Kdpi range'}
+                value={kdpi}
+                
+               
+                step={1}
+                marks = {marks}
                 min = {0}
-                max = {1}
-                onChange={(event) => setKdri(event.target.value)}
+                max = {100}
+                onChange={(event) => setKdpi(event.target.value)}
                 valueLabelDisplay="on"
-                getAriaValueText={kdriText}
+                getAriaValueText={kdpiText}
               />
             </Box>
-            {/* <div>{pra}</div> */}
+          
         </Form.Group> 
 
          {/* Blood Group */}
@@ -508,6 +570,27 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
               ))}
             </ToggleButtonGroup>
           </Form.Group>  
+
+           {/* State */}
+        <Form.Group className="radioClass">
+        <Form.Label className="labelPos3">Donor State</Form.Label>
+          <ToggleButtonGroup 
+            sx={{ flexWrap: "wrap"}}
+            size = "sm" 
+            color="primary"
+            onChange={(event, newValue) => setDonorStateValue(newValue)} 
+            value={donorStateValue}>
+            {states.map((st, idx) => (
+              <Button
+                id={`st-${idx}`}
+                value={st.value}
+              >
+                {st.name}
+              </Button>
+            ))}
+        </ToggleButtonGroup>
+        {/* <div>{stateValue}</div> */}
+        </Form.Group>
         
           <Form.Group className="switchClass mt-3">
          <Form.Label className="labelPos2">Diabetes</Form.Label>
@@ -555,7 +638,7 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
         <Form.Group className="mt-2 hlaWidth" controlId="formHLAA">
           <Select label="Select HLA A" value = {hlaA} onChange={(event) => setHlaA(event)} >
           {hlas.map((a, idx) => (
-              <Option value = {a.value}>{a.name}</Option>
+              <Option className = "flex" value = {a.value}>{a.name}</Option>
           ))}
           </Select>
         </Form.Group>
@@ -572,9 +655,9 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
               </Col>
               <Col xs={4} className="mb-2 mr-2">
                 <Form.Group className="mt-2 hlaWidth" controlId="formHLAB">
-                  <Select label="Select HLA TR" value = {hlaDr} onChange={(event) => setHlaDr(event)} >
-                  {hlas.map((tr, idx) => (
-                      <Option value = {tr.value}>{tr.name}</Option>
+                  <Select label="Select HLA DR" value = {hlaDr} onChange={(event) => setHlaDr(event)} >
+                  {hlas.map((dr, idx) => (
+                      <Option value = {dr.value}>{dr.name}</Option>
                   ))}
                   </Select>
                 </Form.Group>
@@ -593,7 +676,7 @@ const SelectionCard2024 = ({simData, setUpdatedClass, setUpdatedSelection, setUp
             size="lg"
             variant="soft"
             color="primary"
-            className="hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
+            className="genButton hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
             ripple={true}
             fullWidth={true}
             onClick={generateResults}

@@ -1,6 +1,6 @@
 .tooltip {
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #5fa72f;
     border-radius: 4px;
     color: white;
     font-size: 12px;
@@ -19,5 +19,5 @@
     left: -10px;  /* Arrow width * 2 */
     top:50%;
     transform:translateY(-50%);
-    border-color: transparent black transparent transparent;
+    border-color: transparent #5fa72f transparent transparent;
 }

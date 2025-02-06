@@ -29,7 +29,7 @@ export const AxisBottom = ({
           <line
             y1={TICK_LENGTH}
             y2={-height - TICK_LENGTH}
-            stroke="#D2D7D3"
+            stroke="#b7b7b7"
             strokeWidth={0.5}
             shapeRendering={"crispEdges"}
           />
@@ -39,7 +39,7 @@ export const AxisBottom = ({
               fontSize: "10px",
               textAnchor: "middle",
               transform: "translateY(20px)",
-              fill: "#D2D7D3",
+              fill: "#b7b7b7",
             }}
           >
             {value}

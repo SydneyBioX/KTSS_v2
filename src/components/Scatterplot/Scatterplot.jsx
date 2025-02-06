@@ -42,14 +42,14 @@ export const Scatterplot = ({ data, width, height }) => {
   const oScale = d3.scaleLinear().domain([1, 4]).range([0.4, 1]);
   
   const allOffers = data.map((d) => String(d.wait_time));
-  const colorScale = d3
+  /* const colorScale = d3
     .scaleOrdinal()
     .domain(allOffers)
-    .range(["#e0ac2b", "#e85252", "#6689c6", "#1976d2"]);
-
+    .range(["#27621", "#46923c", "#5bb450", "#8bca84"]);
+ */
   // Build the shapes
   const allShapes = data.map((d, i) => {
-    const className =
+    const className2 =
       hovered && d.wait_time !== hovered
         ? styles.scatterplotCircle + " " + styles.dimmed
         : styles.scatterplotCircle;
@@ -60,21 +60,21 @@ export const Scatterplot = ({ data, width, height }) => {
         r={rScale(d.wait_time)}
         cx={xScale(d.kidney_quality)}
         cy={yScale(d.predictsurvprob)}
-        className={className}
-        stroke="grey"
+        className={className2}
+        stroke="#5fa72f"
       //  stroke={colorScale(d.wait_time)}
-      //  fill={colorScale(d.wait_time)}
-        fill="#1976d2"
+      //  fill={colorScale(String(d.wait_time))}
+        fill="#5fa72f"
         opacity={oScale(i)}
         //onMouseOver={(e) => handleHover(e)}
         onMouseEnter={() => setHovered({
           xPos: xScale(d.kidney_quality),
           yPos: yScale(d.predictsurvprob),
           //name: "Offers: " +  d.offer})}
-          name: `Offer: ${d.offer}
-          \n, Wait time: ${d.wait_time}
-          , \nKidney Quality: ${d.kidney_quality}
-          , \nPredict Surv prob: ${d.predictsurvprob}`})}
+          name: `Offer: ${d.offer}\n
+          Wait time: ${d.wait_time}\n
+          Kidney Quality: ${d.kidney_quality}\n
+          Predict Surv prob: ${d.predictsurvprob}`})}
         onMouseLeave={() => setHovered(null)}
       />
       <text dx = {xScale(d.kidney_quality)-7} dy = {yScale(d.predictsurvprob)+5}>{d.wait_time}</text>
@@ -83,7 +83,7 @@ export const Scatterplot = ({ data, width, height }) => {
   });
 
   return (
-    <div>
+    <div style={{height: boundsHeight + 80,}}>
       <svg width={width} height={height}>
         {/* first group is for the violin and box shapes */}
         <g
@@ -92,10 +92,10 @@ export const Scatterplot = ({ data, width, height }) => {
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
           
         >
-          <text dy = {-20} fontSize={20}>Offered kidney and predicted survivor probability</text>
+          <text dy = {-20} fontSize={20}>Offered kidney and graft survivor probability</text>
           {/* Y axis */}
           <AxisLeft yScale={yScale} pixelsPerTick={40} width={boundsWidth} />
-          <text dx = {-250} dy = {-30} transform="rotate(-90)">Survivor Probability (%)</text>
+          <text dx = {-250} dy = {-30} transform="rotate(-90)">Graft survivor Probability (%)</text>
           {/* X axis, use an additional translation to appear at the bottom */}
           <g transform={`translate(0, ${boundsHeight})`}>
             <AxisBottom
@@ -103,13 +103,12 @@ export const Scatterplot = ({ data, width, height }) => {
               pixelsPerTick={40}
               height={boundsHeight}
             />
-            <text dx = {150} dy = {40}>Kidney Quality (%)</text>
+            <text dx = {150} dy = {40}>Kidney Quality (1-KDPI) (%)</text>
           </g>
 
           {/* Circles */}
-          {allShapes}
-          
-          
+          {allShapes}  
+
         </g>
       </svg>
    
